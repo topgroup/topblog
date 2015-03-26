@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -83,10 +84,10 @@ public class UserAction {
 	}
 	
 	@RequestMapping(value="/regedit")
-	public ModelAndView regeditUser(HttpServletRequest request){
+	public ModelAndView regeditUser(HttpServletRequest request,HttpServletResponse response ){
 		
 		//userInfoService.InsertUserInfo();
-		ModelAndView view=new ModelAndView("/user/userList");
+		ModelAndView view=new ModelAndView("redirect:/user/userList");
 		
 		UserInfo userinfo=new UserInfo();
 		userinfo.setUserid(Integer.parseInt(request.getParameter("userId")));
