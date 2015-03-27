@@ -3,11 +3,12 @@
 
 <html>
 <body>
-<h2>Hello World!  ${id}</h2>
+<h2>Login In</h2>
 <form action="/topblog/login" method="post">
 	<input type="text" name="userId" />
 	<input type="text" name="userName" />
 	<input type="submit" name="submit" />
+	<span style="color:red">${msg }</span>
 </form>
 </body>
 </html>

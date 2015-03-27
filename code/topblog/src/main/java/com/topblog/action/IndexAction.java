@@ -1,7 +1,6 @@
 package com.topblog.action;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +15,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,35 +29,34 @@ public class IndexAction {
 	@Autowired
 	private UserInfoService userInfoService;
 	
-	@RequestMapping("/login")
+	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public ModelAndView login(@RequestParam("userId") String userId,@RequestParam("userName") String userName){
 		
 		Map<String, Object> context=new HashMap<String, Object>();
 		
-	    //3、得到Subject及创建用户名/密码身份验证Token（即用户身份/凭证）  
 	    Subject subject = SecurityUtils.getSubject();  
-	    System.out.println(subject);
 	    UsernamePasswordToken token = new UsernamePasswordToken(userId, userName);  
-	  
+	    ModelAndView view =new ModelAndView("../../index");
 	    try {  
-	        //4、登录，即身份验证  
 	        subject.login(token);  
 	        
 	        if(subject.isAuthenticated()){
 	        	context.put("msg","登录成功");
+	        	view=new ModelAndView("../../sucess",context);
 	        }else{
-	        	context.put("msg","登录失败");
+	        	view.addObject("msg","登录失败");
 	        }
 	        
-	    } catch (UnknownAccountException e) {  
-	    	context.put("msg","未知用户名");
+	    } catch (UnknownAccountException e) { 
+	    	view.addObject("msg","未知用户名");
 	    } catch (IncorrectCredentialsException e) {
-	    	context.put("msg","密码错误");
+	    	view.addObject("msg","密码错误");
 		}catch(AuthenticationException e){
-			context.put("msg","登录失败");
+			view.addObject("msg","登录失败");
 		}
 		
-		ModelAndView view=new ModelAndView("../../sucess",context);
+	   
+	    
 		return view;
 	}
 	
@@ -69,11 +68,14 @@ public class IndexAction {
 	    Subject subject = SecurityUtils.getSubject();  
 	  
 	    try {  
-	        //4、登录，即身份验证  
-	        subject.logout();
-	        
-	        context.put("msg","用户已注销");
-	        
+	    	
+	        if(subject.isAuthenticated())  {
+	        	subject.logout();
+	        	context.put("msg","用户已注销");
+	        }
+	        else{
+	        	context.put("msg","用户未登陆,不需要注销");
+	        }
 	    }catch(AuthenticationException e){
 			context.put("msg",e);
 		}
@@ -82,19 +84,11 @@ public class IndexAction {
 		return view;
 	}
 	
-	@RequestMapping(value="/regeditUser")
-	public ModelAndView regeditUser(){
-		
-		ModelAndView view=new ModelAndView("/user/regeditUser");
-		
-		return view;
-	}
-	
 	@RequestMapping(value="/regedit")
 	public ModelAndView regeditUser(HttpServletRequest request,HttpServletResponse response ){
 		
 		//userInfoService.InsertUserInfo();
-		ModelAndView view=new ModelAndView("redirect:/user/userList");
+		ModelAndView view = new ModelAndView("../../regeditUser");
 		
 		UserInfo userinfo=new UserInfo();
 		userinfo.setUserid(Integer.parseInt(request.getParameter("userId")));
@@ -104,8 +98,7 @@ public class IndexAction {
 		
 		userInfoService.insertUserinfo(userinfo);
 		
-		List<UserInfo> userList= userInfoService.getAll();
-		view.addObject("userList",userList);
+		view.addObject("msg", "用户"+userinfo.getUsername()+"添加成功");
 		
 		return view;
 	}

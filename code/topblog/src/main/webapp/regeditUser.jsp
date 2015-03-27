@@ -4,7 +4,7 @@
 <body>
 <div>用户注册</div>
 <div>
-	<form action="/topblog/user/regedit" method="post">
+	<form action="/topblog/regedit" method="post">
 		<table>
 		<tr><td>
 			id：<input type="text" name="userId" />
@@ -24,6 +24,7 @@
 			</td>
 		</tr>
 		</table>
+		<span style="color:red">${msg }</span>
 	</form>
 </div>
 </body>
