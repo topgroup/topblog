@@ -54,8 +54,6 @@ public class IndexAction {
 		}catch(AuthenticationException e){
 			view.addObject("msg","登录失败");
 		}
-		
-	   
 	    
 		return view;
 	}
