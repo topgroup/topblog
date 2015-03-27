@@ -84,6 +84,15 @@ public class IndexAction {
 		return view;
 	}
 	
+	@RequestMapping(value="/regeditUser")
+	public ModelAndView regeditUser(){
+		
+		//userInfoService.InsertUserInfo();
+		ModelAndView view = new ModelAndView("../../regeditUser");
+		
+		return view;
+	}
+	
 	@RequestMapping(value="/regedit")
 	public ModelAndView regeditUser(HttpServletRequest request,HttpServletResponse response ){
 		
@@ -94,8 +103,12 @@ public class IndexAction {
 		userinfo.setUserid(Integer.parseInt(request.getParameter("userId")));
 		userinfo.setUsername(request.getParameter("userName").toString());
 		userinfo.setUserno(Integer.parseInt(request.getParameter("userNo")));
-		userinfo.setSex(Boolean.parseBoolean(request.getParameter("sexMan")));
-		
+		if("on".equals(request.getParameter("sexMan"))){
+			userinfo.setSex(true);
+		}
+		else{
+			userinfo.setSex(false);
+		}
 		userInfoService.insertUserinfo(userinfo);
 		
 		view.addObject("msg", "用户"+userinfo.getUsername()+"添加成功");
