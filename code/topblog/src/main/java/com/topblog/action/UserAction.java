@@ -74,32 +74,4 @@ public class UserAction {
 		
 		return view;
 	}
-	
-	@RequestMapping(value="/regeditUser")
-	public ModelAndView regeditUser(){
-		
-		ModelAndView view=new ModelAndView("/user/regeditUser");
-		
-		return view;
-	}
-	
-	@RequestMapping(value="/regedit")
-	public ModelAndView regeditUser(HttpServletRequest request,HttpServletResponse response ){
-		
-		//userInfoService.InsertUserInfo();
-		ModelAndView view=new ModelAndView("redirect:/user/userList");
-		
-		UserInfo userinfo=new UserInfo();
-		userinfo.setUserid(Integer.parseInt(request.getParameter("userId")));
-		userinfo.setUsername(request.getParameter("userName").toString());
-		userinfo.setUserno(Integer.parseInt(request.getParameter("userNo")));
-		userinfo.setSex(Boolean.parseBoolean(request.getParameter("sexMan")));
-		
-		userInfoService.insertUserinfo(userinfo);
-		
-		List<UserInfo> userList= userInfoService.getAll();
-		view.addObject("userList",userList);
-		
-		return view;
-	}
 }
