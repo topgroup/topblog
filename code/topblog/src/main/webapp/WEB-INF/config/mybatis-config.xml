@@ -4,8 +4,10 @@
 <configuration>  
     <typeAliases>
   	   <package name="com.topblog.entity.Userinfo"/>
+  	   <package name="com.topblog.entity.ShiroSeesion"/>
  	</typeAliases>
     <mappers>  
         <mapper resource="db/test/UserinfoMapper.xml" /> 
+        <mapper resource="db/test/ShiroSessionMapper.xml" /> 
     </mappers>  
 </configuration> 

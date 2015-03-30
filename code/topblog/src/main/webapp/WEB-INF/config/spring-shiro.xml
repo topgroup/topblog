@@ -13,13 +13,25 @@
         default-autowire="byName" >  
 		 
 		<!-- Realm实现 -->  
-		<bean id="loginRealm" class="com.topblog.reaml.LoginRealm">  
-		</bean>  
+		<bean id="loginRealm" class="com.topblog.reaml.LoginRealm"/>
 		
 		<!-- 安全管理器 -->
 		<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 			<property name="realm" ref="loginRealm"/>
+			<property name="sessionManager" ref="sessionManager" />
 		</bean>
+		<!-- 多realm支持 -->
+		<!--
+		<bean id="modelAuthricator" class="org.apache.shiro.authc.pam.ModularRealmAuthenticator">
+	        <property name="authenticationStrategy" ref="firstSuccess"/>
+	        <property name="realms">
+	           <list>
+	             <ref local="loginRealm"/>
+	           </list>
+	        </property>
+	    </bean>
+	    <bean id="firstSuccess" class="org.apache.shiro.authc.pam.FirstSuccessfulStrategy"/>
+	     -->
 		
 		<!-- 基于Form表单的身份验证过滤器 -->
 		<bean id="formAuthenticationFilter" class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter">
@@ -46,4 +58,12 @@
 		        </value>
 		    </property>
 		</bean>
+		
+		<!-- web会话管理器  -->
+		<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+			<property name="sessionValidationSchedulerEnabled" value="false" />
+			<property name="sessionDAO" ref="sessionDAO" />
+			<property name="globalSessionTimeout" value="60000"/>
+		</bean> 
+		<bean id="sessionDAO" class="com.topblog.dao.ShiroSessionDao"/>
  </beans>

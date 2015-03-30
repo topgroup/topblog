@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topblog.mapper.ShiroSessionMapper" >
+  <resultMap id="BaseResultMap" type="com.topblog.entity.ShiroSession" >
+    <id column="SessionId" property="sessionId" jdbcType="INTEGER" />
+    <result column="SessionKey" property="sessionKey" jdbcType="VARCHAR" />
+    <result column="SessionValue" property="sessionValue" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    SessionId,SessionKey,SessionValue
+  </sql>
+  
+  <select id="getAll" resultType="com.topblog.entity.ShiroSession">
+     select 
+		<include refid="Base_Column_List"></include>
+	 from userinfo
+  </select>
+  
+  <select id="getById" resultType="com.topblog.entity.ShiroSession" parameterType="java.lang.Integer">
+     select 
+		<include refid="Base_Column_List"></include>
+	 from ShiroSession
+	 where sessionId = #{sessionId}
+  </select>
+  
+  <select id="getBySessionKey" resultType="com.topblog.entity.ShiroSession" parameterType="java.lang.String">
+     select 
+		<include refid="Base_Column_List"></include>
+	 from ShiroSession
+	 where sessionKey = #{sessionKey}
+  </select>
+  
+  <insert id="insertSession" parameterType="com.topblog.entity.ShiroSession" >
+    insert into ShiroSession ( SessionKey, SessionValue)
+    values (#{sessionKey,jdbcType=VARCHAR}, #{sessionValue,jdbcType=VARCHAR})
+  </insert>
+  
+  <update id="updateSessionById" parameterType="com.topblog.entity.ShiroSession" >
+    update ShiroSession set 
+    	sessionKey= #{sessionKey,jdbcType=VARCHAR},
+    	sessionValue=  #{sessionValue,jdbcType=VARCHAR}
+    where 
+    	sessionId= #{sessionId,jdbcType=INTEGER}
+  </update>
+  
+  <update id="deleteSessionById" parameterType="java.lang.Integer" >
+    delete from ShiroSession
+    where 
+    	sessionId= #{sessionId}
+  </update>
+</mapper>
