@@ -21,16 +21,18 @@ public class ShiroSessionDao extends  AbstractSessionDAO  {
 
 	@Override
 	public void update(Session session) throws UnknownSessionException {
+		System.out.println("updateSession:in");
 		if(session instanceof ValidatingSession && !((ValidatingSession)session).isValid()) {
 		    return; //如果会话过期/停止 没必要再更新了
-		  }
+		}
+		System.out.println("updateSession");
 		try{
 			ShiroSession shiroSession=shiroSessionMapper.getBySessionKey(session.getId().toString());
 			if(null!=shiroSession){
-				shiroSession=new ShiroSession();
+				System.out.println("orign:"+shiroSession.getSessionValue());
 				shiroSession.setSessionKey(session.getId().toString());
 				shiroSession.setSessionValue(SerializableUtils.Serializa(session));
-				
+				System.out.println("orign:"+shiroSession.getSessionValue());
 				shiroSessionMapper.updateSessionById(shiroSession);
 			}
 		}catch(Exception e){
@@ -40,7 +42,7 @@ public class ShiroSessionDao extends  AbstractSessionDAO  {
 
 	@Override
 	public void delete(Session session) {
-		// TODO Auto-generated method stub
+		System.out.println("deleteSession");
 		ShiroSession shiroSession=shiroSessionMapper.getBySessionKey(session.getId().toString());
 		if(null!=shiroSession){
 			this.shiroSessionMapper.deleteSessionById(shiroSession.getSessionId());
@@ -55,6 +57,7 @@ public class ShiroSessionDao extends  AbstractSessionDAO  {
 
 	@Override
 	protected Serializable doCreate(Session session) {
+		System.out.println("createSession");
 		Serializable sessionId=generateSessionId(session);
 		assignSessionId(session,sessionId);
 		
@@ -77,7 +80,6 @@ public class ShiroSessionDao extends  AbstractSessionDAO  {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		
 		return sessionId;
 	}
 
@@ -86,7 +88,8 @@ public class ShiroSessionDao extends  AbstractSessionDAO  {
 		try{
 			ShiroSession shiroSession=shiroSessionMapper.getBySessionKey(sessionId.toString());
 			if(null!= shiroSession){
-				return (Session)SerializableUtils.DeSerializa(shiroSession.getSessionValue());
+				Session session= (Session)SerializableUtils.DeSerializa(shiroSession.getSessionValue());
+				return session;
 			}
 		}
 		catch(Exception e){

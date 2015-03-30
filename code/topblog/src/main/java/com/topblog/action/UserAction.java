@@ -46,7 +46,6 @@ public class UserAction {
 	@RequestMapping(value="/userList")
 	public ModelAndView getUserList(){
 		
-		//userInfoService.InsertUserInfo();
 		ModelAndView view=new ModelAndView();
 		
 		List<UserInfo> userList= userInfoService.getAll();

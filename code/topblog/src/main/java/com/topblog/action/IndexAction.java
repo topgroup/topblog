@@ -36,6 +36,7 @@ public class IndexAction {
 		
 	    Subject subject = SecurityUtils.getSubject();  
 	    UsernamePasswordToken token = new UsernamePasswordToken(userId, userName);  
+	    token.setRememberMe(true);
 	    ModelAndView view =new ModelAndView("../../index");
 	    try {  
 	        subject.login(token);  

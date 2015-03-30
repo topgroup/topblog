@@ -17,9 +17,30 @@
 		
 		<!-- 安全管理器 -->
 		<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		    <property name="sessionMode" value="native"/>  
 			<property name="realm" ref="loginRealm"/>
+			<property name="cacheManager" ref="cacheManager"/>
 			<property name="sessionManager" ref="sessionManager" />
 		</bean>
+		
+		<!-- web会话管理器 -->
+		<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+		    <property name="sessionDAO" ref="sessionDAO"/>  
+			<property name="globalSessionTimeout" value="1800000"/>  
+		    <property name="deleteInvalidSessions" value="true"/>  
+		    <property name="sessionValidationSchedulerEnabled" value="true"/>  
+		    <property name="sessionValidationInterval" value="1800000"/>  
+		    <property name="sessionIdCookie" ref="sessionIdCookie"/>  
+		</bean> 
+		<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">  
+		    <constructor-arg name="name" value="SHRIOSESSIONID"/>  
+		</bean>
+		<bean id="sessionDAO" class="com.topblog.dao.ShiroSessionDao"/>
+		 
+		 <!-- 用户授权信息缓存 -->
+		<bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" /> 
+		<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>     
+		
 		<!-- 多realm支持 -->
 		<!--
 		<bean id="modelAuthricator" class="org.apache.shiro.authc.pam.ModularRealmAuthenticator">
@@ -58,12 +79,4 @@
 		        </value>
 		    </property>
 		</bean>
-		
-		<!-- web会话管理器  -->
-		<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-			<property name="sessionValidationSchedulerEnabled" value="false" />
-			<property name="sessionDAO" ref="sessionDAO" />
-			<property name="globalSessionTimeout" value="60000"/>
-		</bean> 
-		<bean id="sessionDAO" class="com.topblog.dao.ShiroSessionDao"/>
  </beans>
