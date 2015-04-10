@@ -21,18 +21,16 @@ public class ShiroSessionDao extends  AbstractSessionDAO  {
 
 	@Override
 	public void update(Session session) throws UnknownSessionException {
-		System.out.println("updateSession:in");
 		if(session instanceof ValidatingSession && !((ValidatingSession)session).isValid()) {
 		    return; //如果会话过期/停止 没必要再更新了
 		}
-		System.out.println("updateSession");
 		try{
 			ShiroSession shiroSession=shiroSessionMapper.getBySessionKey(session.getId().toString());
 			if(null!=shiroSession){
-				System.out.println("orign:"+shiroSession.getSessionValue());
+				
 				shiroSession.setSessionKey(session.getId().toString());
 				shiroSession.setSessionValue(SerializableUtils.Serializa(session));
-				System.out.println("orign:"+shiroSession.getSessionValue());
+				
 				shiroSessionMapper.updateSessionById(shiroSession);
 			}
 		}catch(Exception e){
@@ -85,6 +83,7 @@ public class ShiroSessionDao extends  AbstractSessionDAO  {
 
 	@Override
 	protected Session doReadSession(Serializable sessionId) {
+		System.out.println("getSession:"+sessionId.toString());
 		try{
 			ShiroSession shiroSession=shiroSessionMapper.getBySessionKey(sessionId.toString());
 			if(null!= shiroSession){

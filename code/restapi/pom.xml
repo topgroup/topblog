@@ -2,11 +2,11 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>topblog</groupId>
-    <artifactId>topblog</artifactId>
+    <groupId>restapi</groupId>
+    <artifactId>restapi</artifactId>
     <packaging>war</packaging>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>topblog Maven Webapp</name>
+    <version>1.0.1-RESETAPI</version>
+    <name>restapi site</name>
     <url>http://maven.apache.org</url>
     <properties>
         <org.springframework.version>4.0.0.RELEASE</org.springframework.version>
@@ -84,6 +84,14 @@
             <version>${org.springframework.version}</version>
             <scope>test</scope>
         </dependency>
+        
+        <!-- Tomcat Servlet API -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
  
         <!-- mybatis -->
         <dependency>
@@ -95,14 +103,6 @@
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-spring</artifactId>
             <version>1.2.0</version>
-        </dependency>
-        
-        <!-- Tomcat Servlet API -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <scope>provided</scope>
         </dependency>
         
         <!-- log4J -->
@@ -118,7 +118,7 @@
             <artifactId>dom4j</artifactId>
             <version>1.6.1</version>
         </dependency>
- 
+ 		
         <!-- 事务配置依赖的包 -->
         <dependency>
             <groupId>org.aspectj</groupId>
@@ -134,14 +134,6 @@
             <groupId>cglib</groupId>
             <artifactId>cglib-nodep</artifactId>
             <version>3.0</version>
-        </dependency>
- 
-        <!-- json 依赖包 -->
-        <dependency>
-            <groupId>net.sf.json-lib</groupId>
-            <artifactId>json-lib</artifactId>
-            <classifier>jdk15</classifier>
-            <version>2.4</version>
         </dependency>
  
         <!-- DataBase Driver -->
@@ -164,31 +156,6 @@
             <scope>test</scope>
         </dependency>
         
-        <!-- jstl -->
-        <dependency> 
-		  	<groupId>jstl</groupId> 
-		    <artifactId>jstl</artifactId> 
-		  	<version>1.2</version> 
-		</dependency> 
-		
-		<dependency> 
-		    <groupId>taglibs</groupId> 
-		    <artifactId>standard</artifactId> 
-			<version>1.1.2</version> 
-		</dependency> 
-		
-		<!-- shiro -->
-		<dependency>  
-	        <groupId>org.apache.shiro</groupId>  
-	        <artifactId>shiro-core</artifactId>  
-	        <version>1.2.3</version>  
-	    </dependency>  
-		 <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-spring</artifactId>
-            <version>1.2.3</version>
-        </dependency>
-        
         <!-- 其它 -->
         <dependency>
             <groupId>commons-dbcp</groupId>
@@ -200,20 +167,27 @@
             <artifactId>commons-pool</artifactId>
             <version>1.0</version>
         </dependency>
-        <dependency>
+         <dependency>
 	    	<groupId>commons-fileupload</groupId>
 	    	<artifactId>commons-fileupload</artifactId>
 		    <version>1.3</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>common-untils</groupId>
   			<artifactId>common-untils</artifactId>
   			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>entity</groupId>
+		  	<artifactId>entity</artifactId>
+		  	<version>1.0.1-SNAPSHOT</version>
+		</dependency>
     </dependencies>
     <build>
-        <finalName>topblog</finalName>
-        <plugins>  
+        <finalName>restapi</finalName>
+         <plugins>  
             <plugin>  
                 <groupId>org.apache.maven.plugins</groupId>  
                 <artifactId>maven-compiler-plugin</artifactId>  
@@ -235,10 +209,10 @@
                 <artifactId>tomcat-maven-plugin</artifactId>  
                 <version>1.0</version>  
                 <configuration>  
-                	<port>8080</port><SPAN style="COLOR: #ff0000"></SPAN> 
-                    <path>/topblog</path>  
+                	<port>8089</port><SPAN style="COLOR: #ff0000"></SPAN> 
+                    <path>/restapi</path>  
                     <uriEncoding>UTF-8</uriEncoding>
-                    <url>http://localhost:8080/manager/html</url>
+                    <url>http://localhost:8089/manager/html</url>
                     <server>tomcat7</server>
                 </configuration>  
             </plugin>  

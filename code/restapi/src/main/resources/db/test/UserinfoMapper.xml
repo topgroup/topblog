@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topblog.mapper.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.dao.entity.UserInfo" >
+    <id column="UserId" property="userid" jdbcType="INTEGER" />
+    <result column="UserName" property="username" jdbcType="VARCHAR" />
+    <result column="UserNo" property="userno" jdbcType="INTEGER" />
+    <result column="Sex" property="sex" jdbcType="BIT" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    UserId, UserName, UserNo, Sex
+  </sql>
+  
+  <select id="getAll" resultType="com.dao.entity.UserInfo">
+     select 
+		<include refid="Base_Column_List"></include>
+	 from userinfo
+  </select>
+  
+  <select id="getAllById" resultType="com.dao.entity.UserInfo" parameterType="java.lang.Integer">
+     select 
+		<include refid="Base_Column_List"></include>
+	 from userinfo
+	 where userId = #{userId}
+  </select>
+  
+  <select id="getAllList" resultMap="BaseResultMap" parameterType="map">
+      select 
+      	<include refid="Base_Column_List"></include>
+      from userinfo
+      where userId = #{userId}
+  </select>
+  
+   <insert id="insertUserinfo" parameterType="com.dao.entity.UserInfo" >
+    insert into userinfo (UserId, UserName, UserNo, 
+      Sex)
+    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{userno,jdbcType=INTEGER}, 
+      #{sex,jdbcType=BIT})
+  </insert>
+</mapper>
