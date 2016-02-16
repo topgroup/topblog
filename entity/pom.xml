@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>topblog</groupId>
+        <artifactId>com.topblog</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>entity</artifactId>
+    <packaging>jar</packaging>
+  
+  <build>
+         <plugins>  
+            <plugin>  
+                <groupId>org.apache.maven.plugins</groupId>  
+                <artifactId>maven-compiler-plugin</artifactId>  
+                <configuration>  
+                    <source>1.7</source>  
+                    <target>1.7</target>  
+                    <encoding>UTF-8</encoding>  
+                </configuration>  
+            </plugin>  
+            <plugin>  
+                <groupId>org.apache.maven.plugins</groupId>  
+                <artifactId>maven-war-plugin</artifactId>  
+                <configuration>  
+                    <warName>topblog</warName>  
+                </configuration>  
+            </plugin>  
+            <plugin>  
+                <groupId>org.codehaus.mojo</groupId>  
+                <artifactId>tomcat-maven-plugin</artifactId>  
+                <version>1.0</version>  
+                <configuration>  
+                	<port>8089</port><SPAN style="COLOR: #ff0000"></SPAN> 
+                    <path>/restapi</path>  
+                    <uriEncoding>UTF-8</uriEncoding>
+                    <url>http://localhost:8089/manager/html</url>
+                    <server>tomcat7</server>
+                </configuration>  
+            </plugin>  
+            <plugin>  
+                <groupId>org.apache.maven.plugins</groupId>  
+                <artifactId>maven-surefire-plugin</artifactId>  
+                <configuration>  
+                    <skip>true</skip>  
+                </configuration>  
+            </plugin>  
+     	</plugins>  
+    </build>
+</project>
